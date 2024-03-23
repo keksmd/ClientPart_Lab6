@@ -2,13 +2,10 @@ package main;
 
 import exceptions.Discntcd;
 import exceptions.LOLDIDNTREAD;
-import utilites.Response;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 

@@ -2,10 +2,8 @@ package commands;
 
 import main.Command;
 
-import utilites.Response;
+import main.Response;
 import utilites.interfaces.methods;
-
-import java.util.ArrayList;
 
 import static utilites.CheckingReader.checkyRead;
 

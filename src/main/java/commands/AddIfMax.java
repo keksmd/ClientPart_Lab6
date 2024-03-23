@@ -1,16 +1,10 @@
 package commands;
 
-import main.CollectionManager;
+
 import main.Command;
 import main.Response;
-import spacemarines.Chapter;
-import spacemarines.Coordinates;
-import spacemarines.SpaceMarine;
-import spacemarines.Weapon;
-import utilites.Response;
-import utilites.interfaces.methods;
 
-import java.util.Comparator;
+import utilites.interfaces.methods;
 
 import static utilites.CheckingReader.checkyRead;
 
