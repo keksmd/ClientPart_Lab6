@@ -2,17 +2,10 @@ package main;
 
 import java.lang.reflect.Field;
 
-public class Response extends Message{
-    private boolean success;
-    public boolean isSuccess() {
-        return success;
+public class Request extends Message{
+    public Request(){
+
     }
-
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -29,13 +22,13 @@ public class Response extends Message{
 
         return s.toString();
     }
-    private boolean flag = true;
-
-    public boolean isFlag() {
-        return flag;
+    Command commandToExecute;
+    public Command getCommandToExecute() {
+        return commandToExecute;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setCommandToExecute(Command commandToExecute) {
+        this.commandToExecute = commandToExecute;
     }
+
 }

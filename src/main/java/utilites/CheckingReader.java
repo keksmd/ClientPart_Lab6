@@ -5,16 +5,9 @@
  *
  */
 package utilites;
-
-
 import exceptions.IncorrectCommandUsing;
-
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Supplier;
-import exceptions.*;
-
-import static utilites.ServerMessaging.*;
 
 
 public class CheckingReader {
@@ -60,7 +53,7 @@ public class CheckingReader {
             } else {
                 return o;
             }
-            //}
+
         }catch(NoSuchElementException e){
             if(input.equals("sin")){
                 return checkyRead(type,predicate,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"),"sin");
@@ -87,6 +80,8 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead1");
                             }
                             break;
@@ -96,12 +91,18 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead2");
                             }
                             break;
                         default:
+                            Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                            System.out.println();
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead2");
                     }} else {
+                    Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                    System.out.println();
                     throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead3");}
                 }
             case "f" -> {
@@ -112,6 +113,9 @@ public class CheckingReader {
                                 if ((Float) o < new Scanner(words[2]).nextFloat()) {
                                     right = false;}
                             } else {
+                                System.out.printf("хуево вызвал проверку,proove(type,uslovie,obj),usl=%s, words = %n",usl);
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead4");
                             }
                             break;
@@ -120,13 +124,19 @@ public class CheckingReader {
                                 if ((Float) o >= new Scanner(words[2]).nextFloat()) {
                                     right = false;}
                             } else {
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead5");
                             }
                             break;
                         default:
+                            Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                            System.out.println();
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead6");
                     }
                 } else {
+                    Arrays.stream(words).forEach(System.out::print);
+                    System.out.println();
                     throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead7");}
             }
             case "s" -> {
@@ -138,6 +148,8 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead8");
                             }
                             break;
@@ -147,10 +159,14 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
+                                Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                                System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead9");
                             }
                             break;
                         default:
+                            Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                            System.out.println();
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead10");
                     }
                 } else if(words.length == 2){
@@ -161,11 +177,15 @@ public class CheckingReader {
                                 right = false;
                             }
                         }else{
+                            Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                            System.out.println();
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead10");
                         }
                         break;
                     }
                 }else{
+                    Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                    System.out.println();
                     throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead11");
                 }
             }

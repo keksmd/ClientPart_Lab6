@@ -1,7 +1,7 @@
 package utilites.interfaces;
 
-import main.Response;
+import main.Request;
 
 public interface methods {
-    Response calling();
+    Request calling();
 }

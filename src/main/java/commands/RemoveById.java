@@ -1,25 +1,23 @@
 package commands;
 
-import main.CollectionManager;
 import main.Command;
-import main.Response;
+import main.Message;
+import main.Request;
 import utilites.interfaces.methods;
 
 public class RemoveById extends Command implements methods{
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     final String idToRemove;
     public RemoveById(String id){
         this.idToRemove = id;
     }
-    public Response calling(){
-        Response resp = super.calling();
-        if(CollectionManager.collection.stream().anyMatch(w->String.valueOf(w.getId()).equals(idToRemove))) {
-            CollectionManager.collection.removeIf(c -> c.getId() == Integer.parseInt(idToRemove));
+    public Request calling(){
+        Request resp = super.calling();
+        setArgs(new String[]{idToRemove});
 
-        }else{
-            resp.addMessage("Ошибка, не существует элемента с таким ID");
-            resp.setSuccess(false);
-
-        }
         return resp;
     }
 

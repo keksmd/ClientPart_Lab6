@@ -3,13 +3,15 @@ package utilites;
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.LOLDIDNTREAD;
 import exceptions.Discntcd;
+import main.Message;
+import main.Request;
 import main.Response;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-
+//Client Messaging
 public class ServerMessaging {
 
     public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD, Discntcd {
@@ -17,23 +19,27 @@ public class ServerMessaging {
         int readed= clientChannel.read(buf);
         if (readed != -1) {
             buf.flip();
-            return ObjectConverter.deserialize( new String(ByteBuffer.allocate(readed).put(buf.array(),0,readed).array()), new TypeReference<Response>() {});
+            String s = new String(ByteBuffer.allocate(readed).put(buf.array(),0,readed).array());
+            System.out.println("readed"+s);
+            return ObjectConverter.deserialize( s, new TypeReference<>() {});
+
         } else throw new LOLDIDNTREAD();
     }
     public static void nioSend(SocketChannel clientChannel,String message) throws IOException {
-        Response resp = new Response();
+        Request resp = new Request();
         resp.addMessage(message);
         message =ObjectConverter.toJson(resp);
-        System.out.println(message);
-        ByteBuffer buf = ByteBuffer.allocate(message.length()).put(message.getBytes());
+        System.out.println("sended"+message);
+        ByteBuffer buf = ByteBuffer.allocate(message.getBytes().length).put(message.getBytes());
         buf = buf.flip();
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
     }
-    public static void nioSend(SocketChannel clientChannel,Response resp) throws IOException {
+    public static void nioSend(SocketChannel clientChannel, Request resp) throws IOException {
         String message = ObjectConverter.toJson(resp);
-        ByteBuffer buf = ByteBuffer.allocate(message.length()).put(message.getBytes());
+        System.out.println("sended"+message);
+        ByteBuffer buf = ByteBuffer.allocate(message.getBytes().length).put(message.getBytes());
         buf = buf.flip();
         while (buf.hasRemaining()){
             clientChannel.write(buf);
