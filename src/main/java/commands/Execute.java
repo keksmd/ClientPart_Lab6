@@ -2,7 +2,6 @@ package commands;
 
 import main.Command;
 import main.Main;
-import main.Message;
 import main.Request;
 import utilites.interfaces.methods;
 
@@ -39,17 +38,11 @@ public class Execute extends Command implements methods{
 
 
                 while (fileContentScanner.hasNextLine()) {
-                    var line = fileContentScanner.nextLine();
-                    if (!line.equals("execute_script " + this.fileName)) {
                         try {
-                            Main.execute(line);
+                            Main.executeNext(fileContentScanner);
                         }catch (IOException e){
 
                         }
-
-                    } else {
-                        System.err.println("Ах ты шалунишка,не стоит делать рекурсионный вызов комманд, рекурсия была проинорирована");
-                    }
                 }
             }
 

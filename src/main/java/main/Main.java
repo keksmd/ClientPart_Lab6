@@ -1,6 +1,7 @@
 package main;
 
 import exceptions.Discntcd;
+import exceptions.IncorrectCommandUsing;
 import exceptions.LOLDIDNTREAD;
 
 import java.io.IOException;
@@ -45,20 +46,27 @@ public class Main {
         try {
             while (flag) {
                 try {
-                    String readed = new Scanner(System.in).nextLine();
-                    execute(readed);
+                    executeNext(new Scanner(System.in));
                 } catch (NoSuchElementException e) {
                     System.err.println("Не надо вводить ctrl+D !!!");
                     System.exit(0);
                 }
             }
         }catch (IOException e){
-            e.printStackTrace();
         }
 
     }
-    public static void execute(String line) throws IOException{
-        Request req = new Command().commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+    public static void executeNext(Scanner s) throws IOException{
+        String line = s.nextLine();
+        Request req = null;
+        boolean flag = false;
+        while(flag) {
+            try {
+                req = new Command().commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+            } catch (IncorrectCommandUsing e) {
+                flag = true;
+            }
+        }
         req.addMessage(line);
         nioSend(socketChannel,req);
         Response response = null;
