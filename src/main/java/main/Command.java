@@ -72,50 +72,25 @@ public class Command implements methods {
      * @return объект,поле cmd,которого имеет реализацию команды переданной в {@link Command#commandReader(String)}
      */
     public Command commandReader(String str){
-        Command cmd = new Command();
+        Command cmd;
         String[] words = str.split(" ");
        if(words.length ==1){
-            switch (str){
-                case "help":
-                    cmd = new Help();
-                    break;
-                case "clear":
-                    cmd = new Clear();
-                    break;
-                case "add":
-                    cmd = new Add();
-                    break;
-                case "add_if_max":
-                    cmd = new AddIfMax();
-                    break;
-                case "add_if_min":
-                    cmd = new AddIfMin();
-                    break;
-
-                case "exit":
-                    cmd = new Exit();
-                    break;
-                case "remove_head":
-                    cmd = new RemoveHead();
-                    break;
-                case "group_counting_by_weapon_type":
-                    cmd = new GroupByWeapon();
-                    break;
-                case "print_field_descending_loyal":
-                    cmd = new PrintFieldDescendingLoyal();
-                    break;
-                case "show":
-                   cmd = new Show();
-                    break;
-                case "info":
-                    cmd = new Info();
-                    break;
-
-                default:
-                    cmd = new NotFound();
-            }
+           cmd = switch (str.toLowerCase()) {
+               case "help" -> new Help();
+               case "clear" -> new Clear();
+               case "add" -> new Add();
+               case "add_if_max" -> new AddIfMax();
+               case "add_if_min" -> new AddIfMin();
+               case "exit" -> new Exit();
+               case "remove_head" -> new RemoveHead();
+               case "group_counting_by_weapon_type" -> new GroupByWeapon();
+               case "print_field_descending_loyal" -> new PrintFieldDescendingLoyal();
+               case "show" -> new Show();
+               case "info" -> new Info();
+               default -> new NotFound();
+           };
         } else if (words.length == 2) {
-           cmd = switch (words[0]) {
+           cmd = switch (words[0].toLowerCase()) {
                case "update_by_id" -> new UpdateById(words[1]);
                case "execute_script" -> new Execute(words[1]);
                case "remove_by_id" -> new RemoveById(words[1]);

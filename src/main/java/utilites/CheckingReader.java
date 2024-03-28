@@ -25,6 +25,7 @@ public class CheckingReader {
         }
         Supplier<?> append;
 
+
         Object o = null;
         append = switch (type.toLowerCase()) {
             case "b" -> sc::nextBoolean;
@@ -69,14 +70,42 @@ public class CheckingReader {
         String[] words = usl.split(" ");
         boolean right = true;
         if(usl.isEmpty()) return true;
+        String pred0 = null;
+        String pred1=null;
+        String pred2=null;
+        switch (words.length){
+            case 1:
+            {
+                pred0 = words[0].strip();
+                break;
+            }
+            case 2:
+            {
+                pred0 = words[0].strip();
+                pred1 = words[1].strip();
+                break;
+            }
+            case 3:
+            {
+                pred0 = words[0].strip();
+                pred1 = words[1].strip();
+                pred2 = words[2].strip();
+                break;
+            }
+
+
+        }
+
 
         switch (type) {
             case "i", "l" -> {
                 if (words.length == 3) {
-                    switch (words[0]) {
+
+                    switch (pred0) {
+                        
                         case "more":
-                            if (words[1].equals("than") && (new Scanner(words[2]).hasNextInt() || new Scanner(words[2]).hasNextLong())) {
-                                if ((Long) o < new Scanner(words[2]).nextLong()) {
+                            if (pred1.equals("than") && (new Scanner(pred2).hasNextInt() || new Scanner(pred2).hasNextLong())) {
+                                if ((Long) o < new Scanner(pred2).nextLong()) {
                                     right = false;
                                 }
                             } else {
@@ -86,8 +115,8 @@ public class CheckingReader {
                             }
                             break;
                         case "less":
-                            if (words[1].equals("than") && (new Scanner(words[2]).hasNextInt() || new Scanner(words[2]).hasNextLong())) {
-                                if ((Long) o > new Scanner(words[2]).nextLong()) {
+                            if (pred1.equals("than") && (new Scanner(pred2).hasNextInt() || new Scanner(pred2).hasNextLong())) {
+                                if ((Long) o > new Scanner(pred2).nextLong()) {
                                     right = false;
                                 }
                             } else {
@@ -107,10 +136,10 @@ public class CheckingReader {
                 }
             case "f" -> {
                 if (words.length == 3) {
-                    switch (words[0]) {
+                    switch (pred0) {
                         case "more":
-                            if (words[1].equals("than") && (new Scanner(words[2]).hasNextFloat())) {
-                                if ((Float) o < new Scanner(words[2]).nextFloat()) {
+                            if (pred1.equals("than") &&( (new Scanner(pred2).hasNextFloat()))||new Scanner(pred2).hasNextDouble()) {
+                                if ((Float) o < new Scanner(pred2).nextFloat()) {
                                     right = false;}
                             } else {
                                 System.out.printf("хуево вызвал проверку,proove(type,uslovie,obj),usl=%s, words = %n",usl);
@@ -120,8 +149,8 @@ public class CheckingReader {
                             }
                             break;
                         case "less":
-                            if (words[1].equals("than") && (new Scanner(words[2]).hasNextFloat())) {
-                                if ((Float) o >= new Scanner(words[2]).nextFloat()) {
+                            if (pred1.equals("than") && (new Scanner(pred2).hasNextFloat())) {
+                                if ((Float) o >= new Scanner(pred2).nextFloat()) {
                                     right = false;}
                             } else {
                                 Arrays.stream(words).forEach(w->System.out.print(w+", "));
@@ -141,10 +170,10 @@ public class CheckingReader {
             }
             case "s" -> {
                 if (words.length == 3) {
-                    switch (words[0]) {
+                    switch (pred0) {
                         case "more":
-                            if (words[1].equals("length") && (new Scanner(words[2]).hasNextInt())) {
-                                if (((String) o).length() <= new Scanner(words[2]).nextInt()) {
+                            if (pred1.equals("length") && (new Scanner(pred2).hasNextInt())) {
+                                if (((String) o).length() <= new Scanner(pred2).nextInt()) {
                                     right = false;
                                 }
                             } else {
@@ -154,8 +183,8 @@ public class CheckingReader {
                             }
                             break;
                         case "less":
-                            if (words[1].equals("length") && (new Scanner(words[2]).hasNextInt())) {
-                                if (((String) o).length() >= new Scanner(words[2]).nextInt()) {
+                            if (pred1.equals("length") && (new Scanner(pred2).hasNextInt())) {
+                                if (((String) o).length() >= new Scanner(pred2).nextInt()) {
                                     right = false;
                                 }
                             } else {
@@ -170,9 +199,9 @@ public class CheckingReader {
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead10");
                     }
                 } else if(words.length == 2){
-                    switch (words[0]){
+                    switch (pred0){
                     case "is":
-                        if(Objects.equals(words[1], "weapon")){
+                        if(Objects.equals(pred1, "weapon")){
                             if(!o.equals("BOLT_PISTOL") && !o.equals("INFERNO_PISTOL")&& !o.equals("MULTI_MELTA") && !o.equals("COMBI_PLASMA_GUN") && !o.equals("GRENADE_LAUNCHER")){
                                 right = false;
                             }
