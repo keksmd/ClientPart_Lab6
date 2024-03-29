@@ -17,6 +17,12 @@ public class Execute extends Command implements methods{
         this.fileName = fileName;
 
     }
+    private String name = "exeute" ;
+
+    public String getFileName() {
+        return fileName;
+    }
+
     @Override
     public String toString() {
         return super.toString();

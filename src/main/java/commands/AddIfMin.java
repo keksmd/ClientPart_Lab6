@@ -16,6 +16,18 @@ public class AddIfMin extends Command implements methods{
     public String toString() {
         return super.toString();
     }
+    private String name = "add_if_min" ;
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Request calling() {
         Request resp = super.calling();
         this.setArgs(new String[] {String.format("add_if_min %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,",

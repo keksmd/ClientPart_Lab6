@@ -9,4 +9,15 @@ public class Show extends Command implements methods{
     public String toString() {
         return super.toString();
     }
+    private String name = "show" ;
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 }

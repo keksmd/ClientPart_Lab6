@@ -16,6 +16,18 @@ public class UpdateById extends Command implements methods{
     public UpdateById(String id){
         this.idToUpdate = id;
     }
+    private String name = "update_by_id" ;
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Request calling(){
         Request resp = super.calling();
         this.setArgs(

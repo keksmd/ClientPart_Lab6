@@ -6,4 +6,16 @@ public class GroupByWeapon extends Command implements methods{
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "group_counting_by_weapon_type" ;
 }

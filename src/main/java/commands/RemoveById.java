@@ -21,4 +21,16 @@ public class RemoveById extends Command implements methods{
         return resp;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "remove_by_id" ;
+
 }

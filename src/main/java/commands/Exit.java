@@ -8,4 +8,16 @@ public class Exit extends Command implements methods{
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "exit" ;
 }

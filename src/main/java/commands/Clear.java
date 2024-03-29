@@ -8,6 +8,18 @@ public class Clear extends Command implements methods{
         Request resp = super.calling();
         return resp;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "clear" ;
     @Override
     public String toString() {
         return super.toString();

@@ -31,10 +31,10 @@ public class Command implements methods {
         Request request = new Request();
         System.out.println("Вызвана комманда класса "+this.getClass());
         request.setCommandToExecute(this);
-        request.getCommandToExecute().setName(this.getClass().toString());
+        request.getCommandToExecute().setName(this.getName());
         return request;
     }
-    private String name ;
+    private String name = "command" ;
 
     public String getName() {
         return name;
@@ -112,7 +112,7 @@ public class Command implements methods {
                         break;
                     default:
                         cmd = new NotFound();
-                        throw new IncorrectCommandUsing();
+
                 }
             } else if (words.length == 2) {
                 switch (words[0].toLowerCase()) {
@@ -130,11 +130,10 @@ public class Command implements methods {
                         break;
                     default:
                         cmd = new NotFound();
-                        throw new IncorrectCommandUsing();
+
                 }
             } else {
                 cmd = new NotFound();
-                throw new IncorrectCommandUsing();
             }
 
 

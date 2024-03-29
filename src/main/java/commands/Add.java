@@ -13,6 +13,18 @@ public class Add extends Command implements methods{
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "add" ;
+
+    @Override
     public String toString() {
         return super.toString();
     }

@@ -57,15 +57,12 @@ public class Main {
 
     }
     public static void executeNext(Scanner s) throws IOException{
-        String line = s.nextLine();
         Request req = null;
         boolean flag = false;
-        while(flag) {
-            try {
-                req = new Command().commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
-            } catch (IncorrectCommandUsing e) {
-                flag = true;
-            }
+        String line = null;
+        while(req==null) {
+            line = s.nextLine();
+            req = new Command().commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
         }
         req.addMessage(line);
         nioSend(socketChannel,req);
