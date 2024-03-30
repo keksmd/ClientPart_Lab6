@@ -20,10 +20,7 @@ public class Clear extends Command implements methods{
     }
 
     private String name = "clear" ;
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
     public Clear(){
 
     };

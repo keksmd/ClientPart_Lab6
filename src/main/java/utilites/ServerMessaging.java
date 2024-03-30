@@ -3,7 +3,6 @@ package utilites;
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.LOLDIDNTREAD;
 import exceptions.Discntcd;
-import main.Message;
 import main.Request;
 import main.Response;
 
@@ -14,13 +13,13 @@ import java.nio.channels.SocketChannel;
 //Client Messaging
 public class ServerMessaging {
 
-    public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD, Discntcd {
+    public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD {
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int readed= clientChannel.read(buf);
         if (readed != -1) {
             buf.flip();
             String s = new String(ByteBuffer.allocate(readed).put(buf.array(),0,readed).array());
-            System.out.println("readed"+s);
+
             return ObjectConverter.deserialize( s, new TypeReference<>() {});
 
         } else throw new LOLDIDNTREAD();
@@ -29,7 +28,6 @@ public class ServerMessaging {
         Request resp = new Request();
         resp.addMessage(message);
         message =ObjectConverter.toJson(resp);
-        System.out.println("sended"+message);
         ByteBuffer buf = ByteBuffer.allocate(message.getBytes().length).put(message.getBytes());
         buf = buf.flip();
         while (buf.hasRemaining()){
@@ -38,7 +36,6 @@ public class ServerMessaging {
     }
     public static void nioSend(SocketChannel clientChannel, Request resp) throws IOException {
         String message = ObjectConverter.toJson(resp);
-        System.out.println("sended"+message);
         ByteBuffer buf = ByteBuffer.allocate(message.getBytes().length).put(message.getBytes());
         buf = buf.flip();
         while (buf.hasRemaining()){

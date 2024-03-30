@@ -1,16 +1,11 @@
 package commands;
 
 import main.Command;
-import main.Message;
 import main.Request;
 import utilites.interfaces.methods;
 
 public class FilterHeight extends Command implements methods{
     final int limit;
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     @Override
     public String getName() {

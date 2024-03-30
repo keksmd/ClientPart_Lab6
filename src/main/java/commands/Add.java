@@ -2,7 +2,6 @@ package commands;
 
 import main.Command;
 
-import main.Message;
 import main.Request;
 import utilites.interfaces.methods;
 
@@ -23,11 +22,6 @@ public class Add extends Command implements methods{
     }
 
     private String name = "add" ;
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     public Request calling(){
         Request resp = super.calling();

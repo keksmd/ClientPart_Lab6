@@ -1,7 +1,7 @@
 package main;
 
+import commands.NotFound;
 import exceptions.Discntcd;
-import exceptions.IncorrectCommandUsing;
 import exceptions.LOLDIDNTREAD;
 
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
+import static main.Command.commandReader;
 import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
@@ -24,7 +25,7 @@ public class Main {
     }
     private static SocketChannel socketChannel;
 
-    public static boolean flag = true;
+    public static final boolean flag = true;
     private  static void setConnection(){
         boolean flag = true;
         while (flag) {
@@ -52,7 +53,7 @@ public class Main {
                     System.exit(0);
                 }
             }
-        }catch (IOException e){
+        }catch (IOException ignored){
         }
 
     }
@@ -62,21 +63,26 @@ public class Main {
         String line = null;
         while(req==null) {
             line = s.nextLine();
-            req = new Command().commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+            req = commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+            if(req.commandToExecute instanceof NotFound){
+                System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
+                req= null;
+            }
         }
         req.addMessage(line);
         nioSend(socketChannel,req);
         Response response = null;
         try {
             response = nioRead(socketChannel);
-        } catch (IOException | LOLDIDNTREAD | Discntcd e) {
+        } catch (IOException | LOLDIDNTREAD e) {
             if (e instanceof Discntcd) {
                 socketChannel.close();
             }
         }
         if (response != null) {
             if (!response.getMessages().isEmpty()) {
-                    System.out.println(response.messages);
+                response.getMessages().forEach(System.out::println);
+
             }
             flag = response.isFlag();
         }

@@ -14,9 +14,5 @@ public class NotFound extends Command implements methods{
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
     private String name = "not_found" ;
 }

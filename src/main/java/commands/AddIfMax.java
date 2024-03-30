@@ -2,7 +2,6 @@ package commands;
 
 
 import main.Command;
-import main.Message;
 
 import main.Request;
 import utilites.interfaces.methods;
@@ -12,10 +11,6 @@ import static utilites.CheckingReader.checkyRead;
 public class AddIfMax extends Command implements methods{
     public AddIfMax(){
 
-    }
-    @Override
-    public String toString() {
-        return super.toString();
     }
 
     @Override

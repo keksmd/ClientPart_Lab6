@@ -16,7 +16,7 @@ public class Response extends Message{
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("***** "+this.getClass()+" Details *****\n");
+        s.append("***** ").append(this.getClass()).append(" Details *****\n");
         for(Field f: this.getClass().getFields()){
             try {
                 f.setAccessible(true);

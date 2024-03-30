@@ -1,7 +1,6 @@
 package commands;
 
 import main.Command;
-import main.Message;
 import main.Request;
 import utilites.interfaces.methods;
 
@@ -9,10 +8,7 @@ import static utilites.CheckingReader.checkyRead;
 
 public class UpdateById extends Command implements methods{
     private final String idToUpdate;
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
     public UpdateById(String id){
         this.idToUpdate = id;
     }
@@ -33,7 +29,7 @@ public class UpdateById extends Command implements methods{
         this.setArgs(
                 new String[]{idToUpdate,
                 (String) checkyRead("s","more length 0","Введите имя","sin"),
-               String.valueOf((Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625","Sin")),
+               String.valueOf((Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625","sin")),
                String.valueOf((Float) checkyRead("f", "more than -353.0", "Введите y-координату в формате деcятичной дроби(y>=-354.0","sin")),
                String.valueOf((Long)checkyRead("l","more than 0","Введите здоровье","sin")),
                String.valueOf((Boolean) checkyRead("b","Введите булевое значение true/false преданности","sin")),

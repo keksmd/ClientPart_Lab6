@@ -2,7 +2,6 @@ package commands;
 
 
 import main.Command;
-import main.Message;
 
 import main.Request;
 import utilites.interfaces.methods;
@@ -12,10 +11,7 @@ import static utilites.CheckingReader.checkyRead;
 public class AddIfMin extends Command implements methods{
     public AddIfMin(){
     }
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
     private String name = "add_if_min" ;
 
     @Override

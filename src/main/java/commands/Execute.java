@@ -23,10 +23,6 @@ public class Execute extends Command implements methods{
         return fileName;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
     public Request calling(){
         Request resp = super.calling();
         File file = new File(fileName);
@@ -46,7 +42,7 @@ public class Execute extends Command implements methods{
                 while (fileContentScanner.hasNextLine()) {
                         try {
                             Main.executeNext(fileContentScanner);
-                        }catch (IOException e){
+                        }catch (IOException ignored){
 
                         }
                 }
