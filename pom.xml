@@ -6,6 +6,9 @@
     <groupId>com.example</groupId>
     <artifactId>my-project</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>client</name>
+
 
     <build>
         <plugins>
@@ -26,7 +29,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.App</mainClass>
+                            <mainClass>main.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
