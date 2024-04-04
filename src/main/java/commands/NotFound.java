@@ -1,0 +1,18 @@
+package commands;
+
+import main.Command;
+import utilites.interfaces.methods;
+
+public class NotFound extends Command implements methods{
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "not_found" ;
+}

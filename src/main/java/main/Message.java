@@ -1,26 +1,14 @@
-package utilites;
+package main;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class Response {
-    private boolean success;
-    ArrayList<String> messages = new ArrayList<>();
-    private boolean flag = true;
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
+public abstract class Message {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("***** Response Details *****\n");
-        for(Field f:Response.class.getFields()){
+        s.append("***** ").append(this.getClass()).append(" Details *****\n");
+        for(Field f:this.getClass().getFields()){
             try {
                 f.setAccessible(true);
                 s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
@@ -33,19 +21,12 @@ public class Response {
         return s.toString();
     }
 
+    ArrayList<String> messages = new ArrayList<>();
     public void setMessages(ArrayList<String> messages) {
         this.messages = messages;
     }
 
-    public Response() {
-    }
-    public boolean isSuccess() {
-        return success;
-    }
-
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public Message() {
     }
 
     public ArrayList<String> getMessages() {

@@ -1,0 +1,3 @@
+add pidor 4 true 4.4
+show
+execute_script script
