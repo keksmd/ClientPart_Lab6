@@ -30,7 +30,7 @@ public class CheckingReader {
         if (!comment.isEmpty()) {
                System.out.println(comment);
         }
-        System.out.printf("checkyRead(type = %s, predicate = %s,comment = %s)%n",type,predicate,comment);
+        //System.out.printf("checkyRead(type = %s, predicate = %s,comment = %s)%n",type,predicate,comment);
 
 
         Supplier<?> append;

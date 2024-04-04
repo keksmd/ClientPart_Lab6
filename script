@@ -1,3 +1,12 @@
-add pidor 4 true 4.4
-show
-execute_script script
+info
+add
+pidor
+4
+4.4
+4
+true
+5.5
+BOLT_PISTOL
+chap
+world
+info
