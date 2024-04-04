@@ -3,6 +3,7 @@ package commands;
 import main.Command;
 import main.Main;
 import main.Request;
+import utilites.CheckingReader;
 import utilites.interfaces.methods;
 
 import java.io.File;
@@ -17,6 +18,8 @@ public class Execute extends Command implements methods{
         this.fileName = fileName;
 
     }
+
+
     private String name = "exeute" ;
 
     public String getFileName() {
@@ -27,7 +30,6 @@ public class Execute extends Command implements methods{
         Request resp = super.calling();
         File file = new File(fileName);
         if(file.exists()){
-            boolean flag = false;
             if (!Main.getWasExecuted().add(fileName)){
                 System.out.println("Ах ты шалунишка,не стоит делать рекурсионный вызов комманд, рекурсия была проинорирована");
             }else {
@@ -55,4 +57,6 @@ public class Execute extends Command implements methods{
             return resp;
         }
     }
+
+
 }

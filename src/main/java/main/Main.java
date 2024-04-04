@@ -1,5 +1,6 @@
 package main;
 
+import commands.ElementArgumentable;
 import commands.NotFound;
 import exceptions.Discntcd;
 import exceptions.LOLDIDNTREAD;
@@ -25,7 +26,7 @@ public class Main {
     }
     private static SocketChannel socketChannel;
 
-    public static final boolean flag = true;
+    public static boolean flag = true;
     private  static void setConnection(){
         boolean flag = true;
         while (flag) {
@@ -59,11 +60,15 @@ public class Main {
     }
     public static void executeNext(Scanner s) throws IOException{
         Request req = null;
-        boolean flag = false;
+
         String line = null;
         while(req==null) {
             line = s.nextLine();
-            req = commandReader(line).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+            Command c = commandReader(line);
+            if(c instanceof ElementArgumentable){
+                ((ElementArgumentable) c).addElement(s);
+            }
+            req = c.calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
             if(req.commandToExecute instanceof NotFound){
                 System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
                 req= null;
@@ -82,9 +87,9 @@ public class Main {
         if (response != null) {
             if (!response.getMessages().isEmpty()) {
                 response.getMessages().forEach(System.out::println);
-
+                flag = response.isFlag();
             }
-            flag = response.isFlag();
+
         }
     }
 

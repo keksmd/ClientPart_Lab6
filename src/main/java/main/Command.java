@@ -9,7 +9,7 @@ import utilites.interfaces.methods;
 
 import java.lang.reflect.Field;
 
-public class Command implements methods {
+public abstract class Command implements methods {
     String[] args = new String[0];
 
     public String[] getArgs() {

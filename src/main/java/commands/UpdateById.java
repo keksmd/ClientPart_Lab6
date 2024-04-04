@@ -1,12 +1,14 @@
 package commands;
 
-import main.Command;
 import main.Request;
 import utilites.interfaces.methods;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import static utilites.CheckingReader.checkyRead;
 
-public class UpdateById extends Command implements methods{
+public class UpdateById extends ElementArgumentable implements methods{
     private final String idToUpdate;
 
     public UpdateById(String id){
@@ -27,22 +29,11 @@ public class UpdateById extends Command implements methods{
     public Request calling(){
         Request resp = super.calling();
         this.setArgs(
-                new String[]{idToUpdate,
-                (String) checkyRead("s","more length 0","Введите имя","sin"),
-               String.valueOf((Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625","sin")),
-               String.valueOf((Float) checkyRead("f", "more than -353.0", "Введите y-координату в формате деcятичной дроби(y>=-354.0","sin")),
-               String.valueOf((Long)checkyRead("l","more than 0","Введите здоровье","sin")),
-               String.valueOf((Boolean) checkyRead("b","Введите булевое значение true/false преданности","sin")),
-               String.valueOf((Float)checkyRead("f","Введите десятичное число,характеризующее длинну","sin")),
-               String.valueOf((String) checkyRead("s","is weapon", """
-                        Введите одно из названия для оружия:
-                            BOLT_PISTOL,
-                            COMBI_PLASMA_GUN,
-                            GRENADE_LAUNCHER,
-                            INFERNO_PISTOL,
-                            MULTI_MELTA""","sin")),
-               String.valueOf((String) checkyRead("s","more length 0", "Введите название главы","sin")),
-               String.valueOf((String) checkyRead("s","more length 0", "Введите название мира","sin"))});
+                Stream.concat(
+                        Stream.of(
+                                idToUpdate),
+                        Arrays.stream(this.getArgs())
+                        ).toArray(String[]::new));
         return resp;
     }
 }
