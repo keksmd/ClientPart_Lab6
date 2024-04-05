@@ -6,7 +6,9 @@ import exceptions.Discntcd;
 import exceptions.LOLDIDNTREAD;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
@@ -30,13 +32,16 @@ public class Main {
     private  static void setConnection(){
         boolean flag = true;
         while (flag) {
-            // InetSocketAddress  socketAddress = new InetSocketAddress("s374052@helios.cs.ifmo.ru",2222);
-            InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8081);
+             ;
+            //InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8081);
             try {
                 flag = false;
+                InetSocketAddress  socketAddress = new InetSocketAddress(InetAddress.getByName("helios.cs.ifmo.ru"),8081);
                 socketChannel = SocketChannel.open(socketAddress);
+                socketChannel.write(ByteBuffer.wrap("QkfR<6584".getBytes()));
             } catch (IOException e) {
                 flag = true;
+                e.printStackTrace();
                 System.out.println("Не удалось подключиться к серверу,введите любую строку,чтобы попробовать еще раз");
                 new Scanner(System.in).nextLine();
             }
