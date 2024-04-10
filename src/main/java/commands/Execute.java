@@ -1,26 +1,25 @@
 package commands;
 
-import main.Command;
+import commands.utilites.Command;
 import main.Main;
 import main.Request;
-import utilites.CheckingReader;
-import utilites.interfaces.methods;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Execute extends Command implements methods{
+public class Execute extends Command {
 
     final String fileName;
     public Execute(String fileName){
+        super(null, null);
         this.fileName = fileName;
 
     }
 
 
-    private String name = "exeute" ;
+    private final String name = "exeute" ;
 
     public String getFileName() {
         return fileName;
@@ -42,11 +41,11 @@ public class Execute extends Command implements methods{
 
 
                 while (fileContentScanner.hasNextLine()) {
-                        try {
-                            Main.executeNext(fileContentScanner);
-                        }catch (IOException ignored){
+                    try {
+                        Main.executeNext(fileContentScanner);
+                    } catch (IOException ignored) {
 
-                        }
+                    }
                 }
             }
 
