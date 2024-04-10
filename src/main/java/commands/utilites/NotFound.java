@@ -1,10 +1,8 @@
-package commands;
+package commands.utilites;
 
-import main.*;
-import utilites.interfaces.*;
-public class Help extends Command implements methods {
-    private String name = "help" ;
+import commands.types.NoArgumented;
 
+public class NotFound extends NoArgumented {
     @Override
     public String getName() {
         return name;
@@ -14,4 +12,6 @@ public class Help extends Command implements methods {
     public void setName(String name) {
         this.name = name;
     }
+
+    private String name = "not_found" ;
 }

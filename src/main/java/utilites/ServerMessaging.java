@@ -14,7 +14,7 @@ import java.nio.channels.SocketChannel;
 public class ServerMessaging {
 
     public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD {
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+        ByteBuffer buf = ByteBuffer.allocate(clientChannel.socket().getReceiveBufferSize());
         int readed= clientChannel.read(buf);
         if (readed != -1) {
             buf.flip();
@@ -33,6 +33,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
+        System.out.println("sended "+message);
     }
     public static void nioSend(SocketChannel clientChannel, Request resp) throws IOException {
         String message = ObjectConverter.toJson(resp);
@@ -41,6 +42,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
+        System.out.println("sended "+message);
     }
 
 }
