@@ -36,13 +36,69 @@ public abstract class Command  {
     public Request calling(){
         Request request = new Request();
         request.setCommandToExecute(this);
-        request.getCommandToExecute().setName(this.getName());
         return request;
     }
     private String name = "command" ;
 
-    public String getName() {
-        return name;
+    /**
+     * Метод, определяющий команду по вводу str
+     *
+     * @return объект,поле cmd,которого имеет реализацию команды переданной в  {@param str - текстовое значение команды}
+     */
+    public static Command commandReader(String str,Context ctx){
+
+        String[] tokens = str.split(" ");
+        String prefix = "";
+        for(int i = 0;i< tokens.length;i++){
+            prefix+=tokens[i];
+            if(CommandMapper.nameToTypeMap.containsKey(prefix)){
+                CommandTypes type = CommandMapper.nameToTypeMap.get(prefix);
+                switch (type) {
+                   case VALUE_ARGUMENTED -> {
+                       if(i < tokens.length - 1){
+                           if(new Scanner(tokens[i + 1]).hasNextInt()){
+                               Command temp =  new ValueArgumented(tokens[i+1]);
+                               temp.setName(prefix);
+                               return temp;
+                           }else{
+                               return new NotFound();
+                           }
+                       } else return new NotFound();
+
+                   }
+                   case WITHOUT_ARGUMENTS -> {
+
+                       Command temp = new NoArgumented();
+                       temp.setName(prefix);
+                       return temp;
+
+                   }
+                   case ELEMENT_ARGUMENTED -> {
+                       Command temp = new ElementArgumented(ctx);
+                       temp.setName(prefix);
+                       return temp;
+                   }
+                   case ELEMENT_AND_VALUE_ARGUMENTED ->{
+                       if(i < tokens.length - 1){
+                           if(new Scanner(tokens[i + 1]).hasNextInt()){
+                               Command temp =  new ElementAndValueArgumented(ctx,tokens[i+1]);
+                               i++;
+                               temp.setName(prefix);
+                               return temp;
+                           }else{
+                               return new NotFound();
+                           }
+                       } else return new NotFound();
+                   }
+               }
+            }else if (prefix.equals("execute_script")&&i< tokens.length-1){
+                new Execute(tokens[i+1]).calling();
+                i++;
+            }
+            prefix+=" ";
+        }
+        return new NotFound();
+
     }
 
     public void setName(String name) {
@@ -74,65 +130,7 @@ public abstract class Command  {
     }
     //Command cmd;
 
-
-    /**
-     * Метод, определяющий команду по вводу str
-     *
-     * @return объект,поле cmd,которого имеет реализацию команды переданной в  {@param str - текстовое значение команды}
-     */
-    public static Command commandReader(String str,Context ctx){
-        Command cmd = null ;
-        String[] tokens = str.split(" ");
-        String prefix = "";
-        boolean findedFlag = false;
-        for(int i = 0;i< tokens.length;i++){
-            prefix+=tokens[i];
-            if(CommandMapper.nameToTypeMap.containsKey(prefix)){
-                findedFlag = true;
-                CommandTypes type = CommandMapper.nameToTypeMap.get(prefix);
-                cmd = switch (type){
-                   case VALUE_ARGUMENTED -> {
-                       if(i < tokens.length - 1){
-                           prefix = "";
-                           if(new Scanner(tokens[i + 1]).hasNextInt()){
-                               Command temp =  new ValueArgumented(tokens[i+1]);
-                               i++;
-                               yield temp;
-                           }else{
-                               yield new NotFound();
-                           }
-                       }else yield new NotFound();
-
-                   }
-                   case WITHOUT_ARGUMENTS -> {
-                       prefix = "";
-                       yield new NoArgumented();
-                   }
-                   case ELEMENT_ARGUMENTED -> {
-                       prefix = "";
-                       yield new ElementArgumented(ctx);
-                   }
-                   case ELEMENT_AND_VALUE_ARGUMENTED ->{
-                       if(i < tokens.length - 1){
-                           prefix = "";
-                           if(new Scanner(tokens[i + 1]).hasNextInt()){
-                               Command temp =  new ElementAndValueArgumented(ctx,tokens[i+1]);
-                               i++;
-                               yield temp;
-                           }else{
-                               yield new NotFound();
-                           }
-                       }else yield new NotFound();
-                   }
-               };
-            }else if (prefix.equals("execute_script")&&i< tokens.length-1){
-                new Execute(tokens[i+1]).calling();
-                i++;
-            }
-            prefix+=" ";
-        }
-        cmd =  !findedFlag ? new NotFound():cmd;
-        return cmd;
-
+    public String getName() {
+        return this.name;
     }
 }
