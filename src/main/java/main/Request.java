@@ -1,5 +1,7 @@
 package main;
 
+import commands.utilites.Command;
+
 import java.lang.reflect.Field;
 
 public class Request extends Message{
@@ -13,8 +15,11 @@ public class Request extends Message{
         for(Field f: this.getClass().getFields()){
             try {
                 f.setAccessible(true);
-                s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
-            } catch (IllegalAccessException e) {
+                if (f.get(this) == null) {
+                    s.append(f.getName()).append("=").append("null").append("\n");
+                }else{
+                    s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
+                }            } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         }

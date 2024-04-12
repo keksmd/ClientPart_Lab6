@@ -20,8 +20,11 @@ public class Response extends Message{
         for(Field f: this.getClass().getFields()){
             try {
                 f.setAccessible(true);
-                s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
-            } catch (IllegalAccessException e) {
+                if (f.get(this) == null) {
+                    s.append(f.getName()).append("=").append("null").append("\n");
+                }else{
+                    s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
+                }            } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         }
