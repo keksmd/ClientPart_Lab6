@@ -12,8 +12,9 @@ import static utilites.ServerMessaging.nioSend;
 
 public class CommandMapper {
     public static HashMap<String,CommandTypes>  nameToTypeMap= new HashMap<>();
-    public static void setCommands(SocketChannel chanel){
-        while (nameToTypeMap.isEmpty()) {
+
+    public static void setCommands(SocketChannel chanel) throws IOException {
+        chanel.configureBlocking(true);
             try {
                 nioSend(chanel, "commands");
                 String coded = nioRead(chanel).getMessages().get(0);
@@ -23,9 +24,9 @@ public class CommandMapper {
                                         CommandTypes.valueOf(w.split(",")[1])));
             } catch (IOException | LOLDIDNTREAD ignored) {
             }
+        chanel.configureBlocking(false);
 
 
-        }
     }
 
     private CommandMapper() {

@@ -3,11 +3,14 @@ package main;
 import commands.utilites.CommandMapper;
 import commands.utilites.NotFound;
 import exceptions.LOLDIDNTREAD;
+import exceptions.NotFoundedCommand;
 import utilites.Context;
 
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
@@ -42,6 +45,8 @@ public class Main {
                 //InetSocketAddress  socketAddress = new InetSocketAddress(InetAddress.getByName("helios.cs.ifmo.ru"),8081);
                 socketChannel = SocketChannel.open(socketAddress);
 
+                socketChannel.configureBlocking(false);
+
                 //socketChannel.write(ByteBuffer.wrap("QkfR<6584".getBytes()));
             } catch (ConnectException e) {
                 flag = true;
@@ -57,46 +62,65 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
         setConnection();
         setCommands(socketChannel);
-        System.out.println("доступные команды и их типы \n"+CommandMapper.nameToTypeMap);
+        Selector selector = Selector.open();
+        socketChannel.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE);
+        System.out.println("доступные команды и их типы \n" + CommandMapper.nameToTypeMap);
 
-            //while (flag) {
+        while (flag) {
+            try {
+
                 try {
-                    new SendingThread().start();
-                    new ReadingThread().start();
+                    if (System.in.available() > 0) {
+                        executeNext(sc);
+                    }
+                } catch (NotFoundedCommand e) {
+                    System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
 
-
-                } catch (NoSuchElementException e) {
-                    System.err.println("Не надо вводить ctrl+D !!!");
-                    System.exit(0);
                 }
-           // }
+
+                try {
+                    if (selector.selectNow() >= 0) {
+                        for (SelectionKey key : selector.selectedKeys()) {
+                            getAnswerFromServer();
+                            socketChannel.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE);
+                        }
+
+                    }
+                } catch (LOLDIDNTREAD e) {
+
+                }
+
+
+
+            } catch (NoSuchElementException | IOException e) {
+
+                System.err.println("Не надо вводить ctrl+D !!!");
+                System.exit(0);
+            }
+        }
+
 
 
     }
     public static void executeNext(Scanner s) throws IOException{
-        Request req = null;
-
-        String line;
-        while(req==null) {
-            line = s.nextLine();
-            req = commandReader(line,new Context(new Scanner(System.in))).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
-            if(req.commandToExecute instanceof NotFound){
-                System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
-                req= null;
-            }
-        }
-        req.addMessage(req.commandToExecute.getName());
-        nioSend(socketChannel,req);
+        Request req = commandReader(s.nextLine(), new Context(new Scanner(System.in))).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+        if (!(req.commandToExecute instanceof NotFound)) {
+            req.addMessage(req.getCommandToExecute().getName());
+            nioSend(socketChannel, req);
+        } else throw new NotFoundedCommand();
     }
-    public static void getAnswerFromServer(){
+
+    public static void getAnswerFromServer() throws LOLDIDNTREAD {
         Response response = null;
 
         try {
             response = nioRead(socketChannel);
-        } catch (IOException | LOLDIDNTREAD ignored) {
+        } catch (IOException ignored) {
+
         }
         if (response != null) {
             if (!response.getMessages().isEmpty()) {

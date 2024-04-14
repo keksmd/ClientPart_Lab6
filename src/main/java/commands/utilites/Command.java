@@ -53,6 +53,7 @@ public abstract class Command  {
             prefix+=tokens[i];
             if(CommandMapper.nameToTypeMap.containsKey(prefix)){
                 CommandTypes type = CommandMapper.nameToTypeMap.get(prefix);
+
                 switch (type) {
                    case VALUE_ARGUMENTED -> {
                        if(i < tokens.length - 1){
@@ -68,23 +69,29 @@ public abstract class Command  {
                    }
                    case WITHOUT_ARGUMENTS -> {
 
+
                        Command temp = new NoArgumented();
                        temp.setName(prefix);
                        return temp;
+
 
                    }
                    case ELEMENT_ARGUMENTED -> {
                        Command temp = new ElementArgumented(ctx);
                        temp.setName(prefix);
+
                        return temp;
                    }
                    case ELEMENT_AND_VALUE_ARGUMENTED ->{
                        if(i < tokens.length - 1){
+
                            if(new Scanner(tokens[i + 1]).hasNextInt()){
                                Command temp =  new ElementAndValueArgumented(ctx,tokens[i+1]);
                                i++;
                                temp.setName(prefix);
+
                                return temp;
+
                            }else{
                                return new NotFound();
                            }
@@ -98,6 +105,7 @@ public abstract class Command  {
             prefix+=" ";
         }
         return new NotFound();
+
 
     }
 

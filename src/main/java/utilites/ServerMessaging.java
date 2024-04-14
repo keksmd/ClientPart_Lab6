@@ -2,7 +2,6 @@ package utilites;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.LOLDIDNTREAD;
-import exceptions.Discntcd;
 import main.Request;
 import main.Response;
 
@@ -16,7 +15,7 @@ public class ServerMessaging {
     public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD {
         ByteBuffer buf = ByteBuffer.allocate(clientChannel.socket().getReceiveBufferSize());
         int readed= clientChannel.read(buf);
-        if (readed != -1) {
+        if (readed > 0) {
             buf.flip();
             String s = new String(ByteBuffer.allocate(readed).put(buf.array(),0,readed).array());
 
@@ -33,7 +32,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
-        System.out.println("sended "+message);
+        //System.out.println("sended "+message);
     }
     public static void nioSend(SocketChannel clientChannel, Request resp) throws IOException {
         String message = ObjectConverter.toJson(resp);
@@ -42,7 +41,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
-        System.out.println("sended "+message);
+        //System.out.println("sended "+message);
     }
 
 }
