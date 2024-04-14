@@ -84,19 +84,19 @@ public abstract class Command  {
         Command cmd = null ;
         String[] tokens = str.split(" ");
         String prefix = "";
-        boolean findedFlag = false;
         for(int i = 0;i< tokens.length;i++){
             prefix+=tokens[i];
             if(CommandMapper.nameToTypeMap.containsKey(prefix)){
-                findedFlag = true;
                 CommandTypes type = CommandMapper.nameToTypeMap.get(prefix);
-                cmd = switch (type){
+                return switch (type) {
                    case VALUE_ARGUMENTED -> {
                        if(i < tokens.length - 1){
-                           prefix = "";
+
                            if(new Scanner(tokens[i + 1]).hasNextInt()){
                                Command temp =  new ValueArgumented(tokens[i+1]);
                                i++;
+                               temp.setName(prefix);
+
                                yield temp;
                            }else{
                                yield new NotFound();
@@ -105,19 +105,23 @@ public abstract class Command  {
 
                    }
                    case WITHOUT_ARGUMENTS -> {
-                       prefix = "";
-                       yield new NoArgumented();
+                       Command temp = new NoArgumented();
+                       temp.setName(prefix);
+
+                       yield temp;
                    }
                    case ELEMENT_ARGUMENTED -> {
-                       prefix = "";
-                       yield new ElementArgumented(ctx);
+                       Command temp = new ElementArgumented(ctx);
+                       temp.setName(prefix);
+                       yield temp;
                    }
                    case ELEMENT_AND_VALUE_ARGUMENTED ->{
                        if(i < tokens.length - 1){
-                           prefix = "";
+
                            if(new Scanner(tokens[i + 1]).hasNextInt()){
                                Command temp =  new ElementAndValueArgumented(ctx,tokens[i+1]);
                                i++;
+                               temp.setName(prefix);
                                yield temp;
                            }else{
                                yield new NotFound();
@@ -131,8 +135,7 @@ public abstract class Command  {
             }
             prefix+=" ";
         }
-        cmd =  !findedFlag ? new NotFound():cmd;
-        return cmd;
+        return new NotFound();
 
     }
 }
