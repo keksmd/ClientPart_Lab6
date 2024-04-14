@@ -7,6 +7,7 @@ import exceptions.NotFoundedCommand;
 import utilites.Context;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -23,6 +24,9 @@ import static utilites.ServerMessaging.nioSend;
 
 
 public class Main {
+    private Main() {
+    }
+
     private final static Set<String> wasExecuted = new HashSet<>();
 
     public static Set<String> getWasExecuted() {
@@ -34,13 +38,21 @@ public class Main {
     private  static void setConnection(){
         boolean flag = true;
         while (flag) {
-            InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8081);
             try {
                 flag = false;
+                InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8081);
+
                 //InetSocketAddress  socketAddress = new InetSocketAddress(InetAddress.getByName("helios.cs.ifmo.ru"),8081);
                 socketChannel = SocketChannel.open(socketAddress);
+
                 socketChannel.configureBlocking(false);
+
                 //socketChannel.write(ByteBuffer.wrap("QkfR<6584".getBytes()));
+            } catch (ConnectException e) {
+                flag = true;
+                e.printStackTrace();
+                System.out.println("Не удалось подключиться к серверу,введите любую строку,чтобы попробовать еще раз");
+                new Scanner(System.in).nextLine();
             } catch (IOException e) {
                 flag = true;
                 e.printStackTrace();
@@ -83,12 +95,14 @@ public class Main {
                 }
 
 
+
             } catch (NoSuchElementException | IOException e) {
 
                 System.err.println("Не надо вводить ctrl+D !!!");
                 System.exit(0);
             }
         }
+
 
 
     }
