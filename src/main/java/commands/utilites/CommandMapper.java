@@ -32,4 +32,8 @@ public class CommandMapper {
 
     }
 
+    private CommandMapper() {
+    }
+
+
 }

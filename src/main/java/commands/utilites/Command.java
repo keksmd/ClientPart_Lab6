@@ -35,7 +35,6 @@ public abstract class Command  {
     public Request calling(){
         Request request = new Request();
         request.setCommandToExecute(this);
-        request.getCommandToExecute().setName(this.getName());
         return request;
     }
 
@@ -110,7 +109,6 @@ public abstract class Command  {
     public void setArgs(String[] args) {
         this.args = args;
     }
-
     public String getName() {
         return name;
     }
@@ -139,10 +137,6 @@ public abstract class Command  {
 
         return s.toString();
     }
-    /**
-     * Метод, определяющий команду по вводу str
-     *
-     * @return объект, поле cmd,которого имеет реализацию команды переданной в  {@param str - текстовое значение команды}
-     */
 
+    
 }
