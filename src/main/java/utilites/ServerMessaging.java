@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-//Client Messaging
 public class ServerMessaging {
+    private ServerMessaging() {
+    }
 
     public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD {
         ByteBuffer buf = ByteBuffer.allocate(clientChannel.socket().getReceiveBufferSize());
@@ -32,7 +33,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
-        //System.out.println("sended "+message);
+        System.out.println("sended " + message);
     }
     public static void nioSend(SocketChannel clientChannel, Request resp) throws IOException {
         String message = ObjectConverter.toJson(resp);
@@ -41,7 +42,7 @@ public class ServerMessaging {
         while (buf.hasRemaining()){
             clientChannel.write(buf);
         }
-        //System.out.println("sended "+message);
+        System.out.println("sended " + message);
     }
 
 }

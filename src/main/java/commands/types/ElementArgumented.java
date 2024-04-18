@@ -1,11 +1,11 @@
 package commands.types;
 
-import commands.elementArgumentable;
+import commands.ElementArgumentable;
 import utilites.Context;
 
 import static utilites.CheckingReader.readSomeArgs;
 
-public class ElementArgumented extends ElementAndValueArgumented implements elementArgumentable {
+public class ElementArgumented extends ElementAndValueArgumented implements ElementArgumentable {
     public ElementArgumented(String[] args){
         super(null,args);
     }

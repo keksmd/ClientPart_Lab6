@@ -11,6 +11,9 @@ import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
 public class CommandMapper {
+    private CommandMapper() {
+    }
+
     public static HashMap<String,CommandTypes>  nameToTypeMap= new HashMap<>();
 
     public static void setCommands(SocketChannel chanel) throws IOException {

@@ -1,5 +1,6 @@
 package commands.utilites;
 
+import commands.IFactory;
 import commands.types.ElementAndValueArgumented;
 import commands.types.ElementArgumented;
 import commands.types.NoArgumented;
@@ -10,14 +11,14 @@ public enum CommandTypes {
     ELEMENT_ARGUMENTED(ElementArgumented::newInstance),
     VALUE_ARGUMENTED(ValueArgumented::newInstance),
     WITHOUT_ARGUMENTS(NoArgumented::newInstance);
-    final commands.factory factory;
+    final IFactory factory;
 
-    public commands.factory getFactory() {
-        return factory;
+    CommandTypes(IFactory f) {
+        this.factory = f;
     }
 
-    CommandTypes(commands.factory f) {
-        this.factory = f;
+    public IFactory getFactory() {
+        return factory;
     }
 
 }

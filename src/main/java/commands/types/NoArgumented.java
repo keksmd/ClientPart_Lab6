@@ -1,9 +1,9 @@
 package commands.types;
 
-import commands.noArgumentable;
+import commands.NoArgumentable;
 import commands.utilites.Command;
 
-public class NoArgumented extends Command implements noArgumentable {
+public class NoArgumented extends Command implements NoArgumentable {
     public NoArgumented(){
         super(null,null);
     }

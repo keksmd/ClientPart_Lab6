@@ -3,7 +3,7 @@ package utilites;
 import java.util.Scanner;
 
 public class Context {
-    Scanner sc;
+    private Scanner sc;
     public Context(Scanner sc){
         this.sc = sc;
     }

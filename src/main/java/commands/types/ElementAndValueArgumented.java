@@ -1,12 +1,12 @@
 package commands.types;
 
-import commands.elementAndValueArgumentable;
+import commands.ElementAndValueArgumentable;
 import commands.utilites.Command;
 import utilites.Context;
 
 import static utilites.CheckingReader.readSomeArgs;
 
-public class ElementAndValueArgumented extends Command implements elementAndValueArgumentable {
+public class ElementAndValueArgumented extends Command implements ElementAndValueArgumentable {
     public String value;
     public ElementAndValueArgumented(String v, String[] args){
         super(v,args);

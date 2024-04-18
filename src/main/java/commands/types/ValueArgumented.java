@@ -1,6 +1,8 @@
 package commands.types;
 
-public class ValueArgumented extends ElementAndValueArgumented {
+import commands.ValueArgumentable;
+
+public class ValueArgumented extends ElementAndValueArgumented implements ValueArgumentable {
 
     public ValueArgumented(String v) {
 
