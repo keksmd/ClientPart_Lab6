@@ -8,8 +8,6 @@ package utilites;
 
 import exceptions.IncorrectCommandUsing;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -206,18 +204,16 @@ public class CheckingReader {
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead10");
                     }
                 } else if(words.length == 2){
-                    switch (pred0){
-                    case "is":
-                        if(Objects.equals(pred1, "weapon")){
-                            if(!o.equals("BOLT_PISTOL") && !o.equals("INFERNO_PISTOL")&& !o.equals("MULTI_MELTA") && !o.equals("COMBI_PLASMA_GUN") && !o.equals("GRENADE_LAUNCHER")){
+                    if (pred0.equals("is")) {
+                        if (Objects.equals(pred1, "weapon")) {
+                            if (!o.equals("BOLT_PISTOL") && !o.equals("INFERNO_PISTOL") && !o.equals("MULTI_MELTA") && !o.equals("COMBI_PLASMA_GUN") && !o.equals("GRENADE_LAUNCHER")) {
                                 right = false;
                             }
-                        }else{
-                            Arrays.stream(words).forEach(w->System.out.print(w+", "));
+                        } else {
+                            Arrays.stream(words).forEach(w -> System.out.print(w + ", "));
                             System.out.println();
                             throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead10");
                         }
-                        break;
                     }
                 }else{
                     Arrays.stream(words).forEach(w->System.out.print(w+", "));

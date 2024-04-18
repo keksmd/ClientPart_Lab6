@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 
 public class ObjectConverter {
+    private ObjectConverter() {
+    }
 
 
     public static <T > String toJson(T o){

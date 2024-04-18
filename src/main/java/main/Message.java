@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public abstract class Message {
+    ArrayList<String> messages = new ArrayList<>();
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -21,13 +22,11 @@ public abstract class Message {
         return s.toString();
     }
 
-    ArrayList<String> messages = new ArrayList<>();
+
     public void setMessages(ArrayList<String> messages) {
         this.messages = messages;
     }
 
-    public Message() {
-    }
 
     public ArrayList<String> getMessages() {
         return messages;

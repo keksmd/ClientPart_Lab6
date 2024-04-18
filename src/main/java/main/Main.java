@@ -16,13 +16,16 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
-import static commands.utilites.Command.commandReader;
+import static commands.utilites.Command.extractCommand;
 import static commands.utilites.CommandMapper.setCommands;
 import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
 
 public class Main {
+    private Main() {
+    }
+
     private final static Set<String> wasExecuted = new HashSet<>();
 
     public static Set<String> getWasExecuted() {
@@ -69,20 +72,15 @@ public class Main {
                     System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
 
                 }
-
                 try {
                     if (selector.selectNow() >= 0) {
                         for (SelectionKey key : selector.selectedKeys()) {
                             getAnswerFromServer();
                             socketChannel.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE);
                         }
-
                     }
                 } catch (LOLDIDNTREAD e) {
-
                 }
-
-
             } catch (NoSuchElementException | IOException e) {
 
                 System.err.println("Не надо вводить ctrl+D !!!");
@@ -93,7 +91,7 @@ public class Main {
 
     }
     public static void executeNext(Scanner s) throws IOException{
-        Request req = commandReader(s.nextLine(), new Context(new Scanner(System.in))).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
+        Request req = extractCommand(s.nextLine(), new Context(new Scanner(System.in))).calling();//прогоняем через кастрированую систему команд,инициализируя commandToExecute и принимая аргументы в ее args
         if (!(req.commandToExecute instanceof NotFound)) {
             req.addMessage(req.getCommandToExecute().getName());
             nioSend(socketChannel, req);

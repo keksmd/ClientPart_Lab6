@@ -19,7 +19,7 @@ public class Execute extends Command {
     }
 
 
-    private final String name = "exeute" ;
+    private final String name = "execute_script";
 
     public String getFileName() {
         return fileName;
