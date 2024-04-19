@@ -16,24 +16,29 @@ public class CheckingReader {
     public static String[] readSomeArgs(int number,String[] types,Scanner input,String[] comments,String[] predicates){
         ArrayList<String> args = new ArrayList<>();
         for(int i = 0;i<number;i++){
-            args.add(String.valueOf(checkyRead(types[i],predicates[i],comments[i],input)));
+            args.add(String.valueOf(validateInput(types[i], predicates[i], comments[i], input)));
 
         }
         return  args.toArray(String[]::new);
 
     }
 
+    /**
+     * Метод,считывающий  и валидирующий данные
+     *
+     * @param type      - типы считываемой информации
+     * @param predicate ограничения для считваемых данных
+     * @param comment   комментарии,выводимые перед вводом данных
+     * @param sc        объект сканера для считвания данных,определяющий источник ввода
+     * @return Object, реперезентирующий необходимую информацию, требуется приведенеи к нужному типу
+     */
 
-    public static Object checkyRead(String type,String predicate,String comment,Scanner sc)  {
+
+    public static Object validateInput(String type, String predicate, String comment, Scanner sc)  {
         if (!comment.isEmpty()) {
                System.out.println(comment);
         }
-        //System.out.printf("checkyRead(type = %s, predicate = %s,comment = %s)%n",type,predicate,comment);
-
-
         Supplier<?> append;
-
-
         Object o = null;
         append = switch (type.toLowerCase()) {
             case "b" -> sc::nextBoolean;
@@ -57,24 +62,33 @@ public class CheckingReader {
                 if (proove(type, predicate, o)) {
                     return o;
                 } else {
-                    return checkyRead(type, predicate, ("Значение не подходит по условию,еще раз\n" + comment).replace("Значение не подходит по условию,еще раз\nЗначение не подходит по условию,еще раз\n", "Значение не подходит по условию    ,еще раз\n"), new Scanner(System.in));
+                    return validateInput(type, predicate, ("Значение не подходит по условию,еще раз\n" + comment).replace("Значение не подходит по условию,еще раз\nЗначение не подходит по условию,еще раз\n", "Значение не подходит по условию    ,еще раз\n"), new Scanner(System.in));
                 }
             } else {
                 return o;
             }
 
         }catch(NoSuchElementException e){
-            System.out.printf("checkyRead(type = %s, predicate = %s,comment = %s,input = %s)%n",type,predicate,comment,o);
+            System.out.printf("checkyRead(type = %s, predicate = %s,comment = %s,input = %s)%n",type,predicate, comment, o);
 
-                return checkyRead(type,predicate,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"),new Scanner(System.in));
+            return validateInput(type, predicate, ("Вы ошиблись,еще раз\n" + comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n", "Вы ошиблись,еще раз\n"), new Scanner(System.in));
         }
 
     }
-    private static boolean proove(String type,String usl,Object o){
 
-        String[] words = usl.split(" ");
+    /**
+     * метод проверки данных
+     *
+     * @param type      тип данных
+     * @param predicate ограничение данных
+     * @param o         объект для валидации
+     * @return boolean значение валидности данных
+     */
+    private static boolean proove(String type, String predicate, Object o) {
+
+        String[] words = predicate.split(" ");
         boolean right = true;
-        if(usl.isEmpty()) return true;
+        if(predicate.isEmpty()) return true;
         String pred0 = null;
         String pred1=null;
         String pred2=null;
@@ -145,9 +159,10 @@ public class CheckingReader {
                         case "more":
                             if (pred1.equals("than") &&( (new Scanner(pred2).hasNextFloat()))||new Scanner(pred2).hasNextDouble()) {
                                 if ((Float) o < new Scanner(pred2).nextFloat()) {
-                                    right = false;}
+                                    right = false;
+                                }
                             } else {
-                                System.out.printf("хуево вызвал проверку,proove(type,uslovie,obj),usl=%s, words = %n",usl);
+                                System.out.printf("хуево вызвал проверку,proove(type,uslovie,obj),predicate=%s, words = %n",predicate);
                                 Arrays.stream(words).forEach(w->System.out.print(w+", "));
                                 System.out.println();
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead4");
@@ -221,16 +236,16 @@ public class CheckingReader {
                     throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead11");
                 }
             }
-            
+
         }
         return right;
     }
 
-    public static Object checkyRead(String type,Scanner input)  {
-        return  checkyRead(type,"","",input);
+    public static Object validateInput(String type, Scanner input) {
+        return validateInput(type, "", "", input);
     }
 
-    public  static Object checkyRead(String type,String comment,Scanner input)  {
-        return  checkyRead(type,"",comment,input);
+    public static Object validateInput(String type, String comment, Scanner input) {
+        return  validateInput(type,"",comment,input);
     }
 }

@@ -25,7 +25,6 @@ public abstract class Command  {
     }
 
 
-
     /**
      * общий для всех классов-комманд,являющихся наследниками {@link Command}
      * метод,реализующий взаимодействие с коллекцией
@@ -38,6 +37,13 @@ public abstract class Command  {
         request.getCommandToExecute().setName(this.getName());
         return request;
     }
+
+    /**
+     * Метод, возвращающий команду,определяемую по текстовому запросу
+     *
+     * @param str - текстовое значение команды
+     * @return объект, реализующий команду
+     */
 
     public static Command extractCommand(String str, Context ctx) {
         String[] tokens = str.split(" ");
